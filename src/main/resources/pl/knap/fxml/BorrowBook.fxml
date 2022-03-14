@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="500.0" prefWidth="1000.0"
+            xmlns="http://javafx.com/javafx/17" fx:controller="pl.knap.controllers.BorrowBookController">
+    <children>
+        <TableView fx:id="borrowBookView" layoutX="178.0" layoutY="14.0" prefHeight="435.0" prefWidth="802.0">
+            <columns>
+                <TableColumn fx:id="titleColumn" prefWidth="74.0" text="%book.title"/>
+                <TableColumn fx:id="authorNameColumn" prefWidth="148.0" text="%book.authorName"/>
+                <TableColumn fx:id="authorSurnameColumn" prefWidth="160.0" text="%book.authorSurname"/>
+                <TableColumn fx:id="categoryColumn" minWidth="0.0" prefWidth="107.0" text="%book.category"/>
+                <TableColumn fx:id="releaseDateColumn" prefWidth="181.0" text="%book.releaseDate"/>
+                <TableColumn fx:id="isbnColumn" prefWidth="131.0" text="%book.isbn"/>
+            </columns>
+        </TableView>
+        <Button layoutX="39.0" layoutY="29.0" mnemonicParsing="false" onAction="#borrowBook" text="%user.borrowBook"/>
+        <Button layoutX="37.0" layoutY="70.0" mnemonicParsing="false" onAction="#backToMenu" text="%back"/>
+    </children>
+</AnchorPane>
