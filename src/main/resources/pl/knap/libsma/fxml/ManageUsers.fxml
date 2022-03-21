@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="500.0" prefWidth="1000.0"
+            xmlns="http://javafx.com/javafx/17" fx:controller="pl.knap.libsma.controllers.ManageUsersController">
+    <children>
+        <TableView fx:id="usersTableView" layoutX="132.0" layoutY="14.0" prefHeight="413.0" prefWidth="846.0">
+            <columns>
+                <TableColumn fx:id="idColumn" prefWidth="81.0" text="ID"/>
+                <TableColumn fx:id="loginColumn" prefWidth="222.0" text="%addUser.login"/>
+                <TableColumn fx:id="passwordColumn" prefWidth="188.0" text="%addUser.password"/>
+                <TableColumn fx:id="typeColumn" prefWidth="354.0" text="%addUser.type"/>
+            </columns>
+        </TableView>
+        <Button layoutX="14.0" layoutY="95.0" mnemonicParsing="false" onAction="#backToMenu" text="%back"/>
+        <Button layoutX="7.0" layoutY="22.0" mnemonicParsing="false" onAction="#addUser" text="%admin.addUser"/>
+        <Button layoutX="10.0" layoutY="58.0" mnemonicParsing="false" onAction="#deleteUser"
+                text="%manageUsers.deleteUserButton"/>
+    </children>
+</AnchorPane>

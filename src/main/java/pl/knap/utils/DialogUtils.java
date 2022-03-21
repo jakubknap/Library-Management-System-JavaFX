@@ -8,107 +8,86 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class DialogUtils {
-    static ResourceBundle bundle = FxmlUtils.getResourceBundle();
+    private static final ResourceBundle bundle = FxmlUtils.getResourceBundle();
+
+    public static void addUserDialog() {
+        informationAlert("addUser.header");
+    }
 
     public static void addBookDialog() {
-        Alert informationAlert = new Alert(Alert.AlertType.INFORMATION);
-        informationAlert.setTitle(bundle.getString("informationDialog.title"));
-        informationAlert.setHeaderText(bundle.getString("addBook.header"));
-        informationAlert.showAndWait();
+        informationAlert("addBook.header");
+    }
+
+    public static void returnBookDialog() {
+        informationAlert("returnBook.header");
+    }
+
+    public static void successfullyUpdatedDialog() {
+        informationAlert("sUpdate.header");
+    }
+
+    public static void existingUserDialog() {
+        informationAlert("existingUser.header");
+    }
+
+    public static void existingBookDialog() {
+        informationAlert("existingBook.header");
+    }
+
+    public static void incorrectDataDialog() {
+        informationAlert("incorrectData.header");
+    }
+
+    public static void correctDataDialog() {
+        informationAlert("correctData.header");
+    }
+
+    public static void borrowBookDialog() {
+        informationAlert("borrowBook.header");
     }
 
     public static Optional<ButtonType> confirmationExitDialog() {
-        Alert confirmationExit = new Alert(Alert.AlertType.CONFIRMATION);
-        confirmationExit.setTitle(bundle.getString("exitConfirmation.title"));
-        confirmationExit.setHeaderText(bundle.getString("exitConfirmation.header"));
-        return confirmationExit.showAndWait();
+        return confirmationDialog("exitConfirmation.title", "exitConfirmation.header");
+    }
+
+    public static Optional<ButtonType> confirmationLogoutDialog() {
+        return confirmationDialog("logoutConfirmation.title", "logoutConfirmation.header");
+    }
+
+    public static Optional<ButtonType> confirmationDeleteUserDialog() {
+        return confirmationDialog("confirmationDialog.title", "deleteUserConfirmation.header");
+    }
+
+    public static Optional<ButtonType> confirmationDeleteBookDialog() {
+        return confirmationDialog("confirmationDialog.title", "deleteBookConfirmation.header");
     }
 
     public static String errorDialog(String error) {
+        return errorAlert(error, "error.title", "error.header");
+    }
+
+    private static String errorAlert(String error, String title, String header) {
         Alert errorAlert = new Alert(Alert.AlertType.ERROR);
-        errorAlert.setTitle(bundle.getString("error.title"));
-        errorAlert.setHeaderText(bundle.getString("error.header"));
+        errorAlert.setTitle(bundle.getString(title));
+        errorAlert.setHeaderText(bundle.getString(header));
         TextArea textArea = new TextArea(error);
         errorAlert.getDialogPane().setContent(textArea);
         errorAlert.showAndWait();
         return error;
     }
 
-    public static Optional<ButtonType> confirmationLogoutDialog() {
+
+    private static Optional<ButtonType> confirmationDialog(String title, String header) {
         Alert confirmationExit = new Alert(Alert.AlertType.CONFIRMATION);
-        confirmationExit.setTitle(bundle.getString("logoutConfirmation.title"));
-        confirmationExit.setHeaderText(bundle.getString("logoutConfirmation.header"));
+        confirmationExit.setTitle(bundle.getString(title));
+        confirmationExit.setHeaderText(bundle.getString(header));
         return confirmationExit.showAndWait();
     }
 
-    public static Optional<ButtonType> confirmationDeleteUserDialog() {
-        Alert confirmationExit = new Alert(Alert.AlertType.CONFIRMATION);
-        confirmationExit.setTitle(bundle.getString("confirmationDialog.title"));
-        confirmationExit.setHeaderText(bundle.getString("deleteUserConfirmation.header"));
-        return confirmationExit.showAndWait();
-    }
-
-    public static void addUserDialog() {
+    private static void informationAlert(String header) {
         Alert informationAlert = new Alert(Alert.AlertType.INFORMATION);
         informationAlert.setTitle(bundle.getString("informationDialog.title"));
-        informationAlert.setHeaderText(bundle.getString("addUser.header"));
-        informationAlert.showAndWait();
-    }
-
-    public static void existingUserDialog() {
-        Alert informationAlert = new Alert(Alert.AlertType.INFORMATION);
-        informationAlert.setTitle(bundle.getString("informationDialog.title"));
-        informationAlert.setHeaderText(bundle.getString("existingUser.header"));
-        informationAlert.showAndWait();
-    }
-
-    public static void existingBookDialog() {
-        Alert informationAlert = new Alert(Alert.AlertType.INFORMATION);
-        informationAlert.setTitle(bundle.getString("informationDialog.title"));
-        informationAlert.setHeaderText(bundle.getString("existingBook.header"));
-        informationAlert.showAndWait();
-    }
-
-    public static void incorrectDataDialog() {
-        Alert informationAlert = new Alert(Alert.AlertType.INFORMATION);
-        informationAlert.setTitle(bundle.getString("informationDialog.title"));
-        informationAlert.setHeaderText(bundle.getString("incorrectData.header"));
-        informationAlert.showAndWait();
-    }
-
-    public static void correctDataDialog() {
-        Alert informationAlert = new Alert(Alert.AlertType.INFORMATION);
-        informationAlert.setTitle(bundle.getString("informationDialog.title"));
-        informationAlert.setHeaderText(bundle.getString("correctData.header"));
-        informationAlert.showAndWait();
-    }
-
-    public static void borrowBookDialog() {
-        Alert informationAlert = new Alert(Alert.AlertType.INFORMATION);
-        informationAlert.setTitle(bundle.getString("informationDialog.title"));
-        informationAlert.setHeaderText(bundle.getString("borrowBook.header"));
-        informationAlert.showAndWait();
-    }
-
-    public static void successfullyUpdatedDialog() {
-        Alert informationAlert = new Alert(Alert.AlertType.INFORMATION);
-        informationAlert.setTitle(bundle.getString("informationDialog.title"));
-        informationAlert.setHeaderText(bundle.getString("sUpdate.header"));
-        informationAlert.showAndWait();
-    }
-
-    public static Optional<ButtonType> confirmationDeleteBookDialog() {
-        Alert confirmationExit = new Alert(Alert.AlertType.CONFIRMATION);
-        confirmationExit.setTitle(bundle.getString("confirmationDialog.title"));
-        confirmationExit.setHeaderText(bundle.getString("deleteBookConfirmation.header"));
-        Optional<ButtonType> result = confirmationExit.showAndWait();
-        return result;
-    }
-
-    public static void returnBookDialog() {
-        Alert informationAlert = new Alert(Alert.AlertType.INFORMATION);
-        informationAlert.setTitle(bundle.getString("informationDialog.title"));
-        informationAlert.setHeaderText(bundle.getString("returnBook.header"));
+        informationAlert.setHeaderText(bundle.getString(header));
         informationAlert.showAndWait();
     }
 }

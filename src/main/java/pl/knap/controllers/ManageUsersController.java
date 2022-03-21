@@ -9,7 +9,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import pl.knap.database.dao.UsersDao;
-import pl.knap.database.models.Users;
+import pl.knap.database.models.User;
 import pl.knap.utils.DialogUtils;
 import pl.knap.utils.FxmlUtils;
 
@@ -17,18 +17,18 @@ import java.sql.SQLException;
 
 public class ManageUsersController {
     private static final String ADD_USER_FXML = "/pl/knap/fxml/AddUser.fxml";
-    private ObservableList<Users> allUsersAndAdminsInfo = FXCollections.observableArrayList();
+    private ObservableList<User> allUserAndAdminsInfo = FXCollections.observableArrayList();
 
     @FXML
-    private TableView<Users> usersTableView;
+    private TableView<User> usersTableView;
     @FXML
-    private TableColumn<Users, String> loginColumn;
+    private TableColumn<User, String> loginColumn;
     @FXML
-    private TableColumn<Users, String> passwordColumn;
+    private TableColumn<User, String> passwordColumn;
     @FXML
-    private TableColumn<Users, String> typeColumn;
+    private TableColumn<User, String> typeColumn;
     @FXML
-    private TableColumn<Users, Integer> idColumn;
+    private TableColumn<User, Integer> idColumn;
 
     @FXML
     private void initialize() throws SQLException {
@@ -37,7 +37,7 @@ public class ManageUsersController {
 
     private void TableViewCreator() throws SQLException {
         UsersDao usersDao = new UsersDao();
-        allUsersAndAdminsInfo = usersDao.allUsersAndAdminsInfo();
+        allUserAndAdminsInfo = usersDao.allUsersAndAdminsInfo();
         usersTableView.setEditable(true);
 
         idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -45,16 +45,16 @@ public class ManageUsersController {
         passwordColumnViewAndEdit(usersDao);
         typeColumnViewAndEdit(usersDao);
 
-        usersTableView.setItems(allUsersAndAdminsInfo);
+        usersTableView.setItems(allUserAndAdminsInfo);
     }
 
     private void typeColumnViewAndEdit(UsersDao usersDao) {
         typeColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
         typeColumn.setCellFactory(TextFieldTableCell.forTableColumn());
-        typeColumn.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Users, String>>() {
+        typeColumn.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<User, String>>() {
             @Override
-            public void handle(TableColumn.CellEditEvent<Users, String> usersStringCellEditEvent) {
-                Users user = usersStringCellEditEvent.getRowValue();
+            public void handle(TableColumn.CellEditEvent<User, String> usersStringCellEditEvent) {
+                User user = usersStringCellEditEvent.getRowValue();
                 user.setType(usersStringCellEditEvent.getNewValue());
                 try {
                     usersDao.updateAdminType(user);
@@ -68,10 +68,10 @@ public class ManageUsersController {
     private void passwordColumnViewAndEdit(UsersDao usersDao) {
         passwordColumn.setCellValueFactory(new PropertyValueFactory<>("password"));
         passwordColumn.setCellFactory(TextFieldTableCell.forTableColumn());
-        passwordColumn.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Users, String>>() {
+        passwordColumn.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<User, String>>() {
             @Override
-            public void handle(TableColumn.CellEditEvent<Users, String> usersStringCellEditEvent) {
-                Users user = usersStringCellEditEvent.getRowValue();
+            public void handle(TableColumn.CellEditEvent<User, String> usersStringCellEditEvent) {
+                User user = usersStringCellEditEvent.getRowValue();
                 user.setPassword(usersStringCellEditEvent.getNewValue());
                 try {
                     usersDao.updateAdminPassword(user);
@@ -85,10 +85,10 @@ public class ManageUsersController {
     private void loginColumnViewAndEdit(UsersDao usersDao) {
         loginColumn.setCellValueFactory(new PropertyValueFactory<>("login"));
         loginColumn.setCellFactory(TextFieldTableCell.forTableColumn());
-        loginColumn.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Users, String>>() {
+        loginColumn.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<User, String>>() {
             @Override
-            public void handle(TableColumn.CellEditEvent<Users, String> usersStringCellEditEvent) {
-                Users user = usersStringCellEditEvent.getRowValue();
+            public void handle(TableColumn.CellEditEvent<User, String> usersStringCellEditEvent) {
+                User user = usersStringCellEditEvent.getRowValue();
                 String oldLogin = usersStringCellEditEvent.getOldValue();
                 user.setLogin(usersStringCellEditEvent.getNewValue());
                 try {
@@ -113,7 +113,7 @@ public class ManageUsersController {
     @FXML
     private void deleteUser() throws SQLException {
         try {
-            Users user = usersTableView.getSelectionModel().getSelectedItem();
+            User user = usersTableView.getSelectionModel().getSelectedItem();
             UsersDao usersDao = new UsersDao();
             if (usersDao.deleteUser(user)) {
                 usersTableView.getItems().removeAll(usersTableView.getSelectionModel().getSelectedItem());

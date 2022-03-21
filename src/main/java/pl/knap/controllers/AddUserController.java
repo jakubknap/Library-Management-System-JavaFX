@@ -7,7 +7,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import pl.knap.database.dao.UsersDao;
-import pl.knap.database.models.Users;
+import pl.knap.database.models.User;
 import pl.knap.utils.DialogUtils;
 import pl.knap.utils.FxmlUtils;
 
@@ -40,7 +40,7 @@ public class AddUserController {
             String login = loginInput.getText();
             String password = passwordInput.getText();
             String type = typeConverter();
-            Users user = new Users(login, password, type);
+            User user = new User(login, password, type);
             UsersDao usersDao = new UsersDao();
             usersDao.addUser(user);
         } catch (NullPointerException e) {

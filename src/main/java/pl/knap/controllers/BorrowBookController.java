@@ -58,7 +58,7 @@ public class BorrowBookController {
 
     private void TableViewCreator() throws SQLException {
         BooksDao booksDao = new BooksDao();
-        allBooksInfo = booksDao.getAllBooksAvailableInfo();
+        allBooksInfo = booksDao.getBooksInfo("available");
 
         titleColumnView();
         authorNameColumnView();

@@ -1,21 +1,21 @@
-package pl.knap.database.models;
+package pl.knap.libsma.database.models;
 
-public class Users {
+public class User {
     private Integer id;
     private String login, password, type;
 
-    public Users(String login, String password) {
+    public User(String login, String password) {
         this.login = login;
         this.password = password;
     }
 
-    public Users(String login, String password, String type) {
+    public User(String login, String password, String type) {
         this.login = login;
         this.password = password;
         this.type = type;
     }
 
-    public Users(String login, String password, String type, Integer id) {
+    public User(String login, String password, String type, Integer id) {
         this.id = id;
         this.login = login;
         this.password = password;

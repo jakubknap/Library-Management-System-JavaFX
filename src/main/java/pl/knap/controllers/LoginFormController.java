@@ -6,7 +6,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import pl.knap.database.dao.UsersDao;
-import pl.knap.database.models.Users;
+import pl.knap.database.models.User;
 import pl.knap.utils.DialogUtils;
 
 import java.sql.SQLException;
@@ -16,8 +16,8 @@ public class LoginFormController {
     private static final String ADMIN_MAIN_BORDER_PANE_FXML = "/pl/knap/fxml/AdminMainBorderPane.fxml";
     private static final String USER_MAIN_BORDER_PANE_FXML = "/pl/knap/fxml/UserMainBorderPane.fxml";
     public static ObservableList<String> loginInfo = FXCollections.observableArrayList();
-    private ObservableList<Users> allAdminsInfo = FXCollections.observableArrayList();
-    private ObservableList<Users> allUsersInfo = FXCollections.observableArrayList();
+    private ObservableList<User> allAdminsInfo = FXCollections.observableArrayList();
+    private ObservableList<User> allUserInfo = FXCollections.observableArrayList();
     @FXML
     private TextField loginInput;
 
@@ -29,7 +29,7 @@ public class LoginFormController {
         try {
             UsersDao usersDao = new UsersDao();
             allAdminsInfo = usersDao.allAdminsInfo();
-            allUsersInfo = usersDao.allUsersInfo();
+            allUserInfo = usersDao.allUsersInfo();
         } catch (SQLException e) {
             DialogUtils.errorDialog(e.getMessage());
         }
@@ -56,7 +56,7 @@ public class LoginFormController {
     }
 
     private boolean checkAdmin(String login, String password) {
-        for (Users user : allAdminsInfo) {
+        for (User user : allAdminsInfo) {
             if (checkLoginData(user, login, password)) {
                 GeneralControllersMethods.setRoot(ADMIN_MAIN_BORDER_PANE_FXML);
                 return true;
@@ -66,7 +66,7 @@ public class LoginFormController {
     }
 
     private boolean checkUser(String login, String password) {
-        for (Users user : allUsersInfo) {
+        for (User user : allUserInfo) {
             if (checkLoginData(user, login, password)) {
                 GeneralControllersMethods.setRoot(USER_MAIN_BORDER_PANE_FXML);
                 return true;
@@ -75,7 +75,7 @@ public class LoginFormController {
         return false;
     }
 
-    private boolean checkLoginData(Users user, String login, String password) {
+    private boolean checkLoginData(User user, String login, String password) {
         return user.getLogin().equals(login) && user.getPassword().equals(password);
     }
 }

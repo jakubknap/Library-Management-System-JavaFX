@@ -3,10 +3,11 @@ module pl.knap {
     requires javafx.fxml;
     requires java.sql;
 
-    opens pl.knap to javafx.fxml;
-    exports pl.knap;
-    exports pl.knap.controllers;
-    opens pl.knap.controllers to javafx.fxml;
-    exports pl.knap.database.models;
-    opens pl.knap.database.models to javafx.fxml;
+    opens pl.knap.libsma to javafx.fxml;
+    exports pl.knap.libsma;
+    exports pl.knap.libsma.controllers;
+    opens pl.knap.libsma.controllers to javafx.fxml;
+    exports pl.knap.libsma.database.models;
+    opens pl.knap.libsma.database.models to javafx.fxml;
+
 }

@@ -1,7 +1,7 @@
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>pl.knap</groupId>
+    <groupId>pl.knap.libsma</groupId>
     <artifactId>Library</artifactId>
     <version>1.0-SNAPSHOT</version>
     <properties>
@@ -24,6 +24,12 @@
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <version>8.0.28</version>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.13.2</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
     <build>
@@ -48,7 +54,7 @@
                         <!-- Usage: mvn clean javafx:run -->
                         <id>default-cli</id>
                         <configuration>
-                            <mainClass>pl.knap.NewMain</mainClass>
+                            <mainClass>pl.knap.libsma.NewMain</mainClass>
                         </configuration>
                     </execution>
                 </executions>
@@ -67,7 +73,7 @@
                             <transformers>
                                 <transformer
                                         implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <mainClass>pl.knap.NewMain</mainClass>
+                                    <mainClass>pl.knap.libsma.NewMain</mainClass>
                                 </transformer>
                             </transformers>
                         </configuration>

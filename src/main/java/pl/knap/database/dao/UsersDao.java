@@ -4,7 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ButtonType;
 import pl.knap.database.dbutils.DbManager;
-import pl.knap.database.models.Users;
+import pl.knap.database.models.User;
 import pl.knap.utils.DialogUtils;
 
 import java.sql.Connection;
@@ -14,39 +14,39 @@ import java.sql.Statement;
 import java.util.Optional;
 
 public class UsersDao {
-    public ObservableList<Users> allAdminsInfo() throws SQLException {
+    public ObservableList<User> allAdminsInfo() throws SQLException {
         Connection connection = DbManager.createConnectionSource();
         Statement statement = connection.createStatement();
-        ObservableList<Users> adminInfoList = FXCollections.observableArrayList();
+        ObservableList<User> adminInfoList = FXCollections.observableArrayList();
         String query = "SELECT login,password FROM users WHERE type = \"administrator\"";
         ResultSet rs = statement.executeQuery(query);
         while (rs.next()) {
             String login = rs.getString("login");
             String password = rs.getString("password");
-            Users admin = new Users(login, password);
+            User admin = new User(login, password);
             adminInfoList.add(admin);
         }
         connection.close();
         return adminInfoList;
     }
 
-    public ObservableList<Users> allUsersInfo() throws SQLException {
+    public ObservableList<User> allUsersInfo() throws SQLException {
         Connection connection = DbManager.createConnectionSource();
         Statement statement = connection.createStatement();
-        ObservableList<Users> userInfoList = FXCollections.observableArrayList();
+        ObservableList<User> userInfoList = FXCollections.observableArrayList();
         String query = "SELECT login,password FROM users WHERE type = \"user\"";
         ResultSet rs = statement.executeQuery(query);
         while (rs.next()) {
             String login = rs.getString("login");
             String password = rs.getString("password");
-            Users user = new Users(login, password);
+            User user = new User(login, password);
             userInfoList.add(user);
         }
         connection.close();
         return userInfoList;
     }
 
-    public void addUser(Users user) throws SQLException {
+    public void addUser(User user) throws SQLException {
         if (!(checkExistingUser(user))) {
             Connection connection = DbManager.createConnectionSource();
             Statement statement = connection.createStatement();
@@ -62,7 +62,7 @@ public class UsersDao {
         }
     }
 
-    private boolean checkExistingUser(Users user) throws SQLException {
+    private boolean checkExistingUser(User user) throws SQLException {
         Connection connection = DbManager.createConnectionSource();
         Statement statement = connection.createStatement();
         String login = user.getLogin();
@@ -78,10 +78,10 @@ public class UsersDao {
         }
     }
 
-    public ObservableList<Users> allUsersAndAdminsInfo() throws SQLException {
+    public ObservableList<User> allUsersAndAdminsInfo() throws SQLException {
         Connection connection = DbManager.createConnectionSource();
         Statement statement = connection.createStatement();
-        ObservableList<Users> userAndAdminInfoList = FXCollections.observableArrayList();
+        ObservableList<User> userAndAdminInfoList = FXCollections.observableArrayList();
         String query = "SELECT * FROM users";
         ResultSet rs = statement.executeQuery(query);
         while (rs.next()) {
@@ -89,14 +89,14 @@ public class UsersDao {
             String password = rs.getString("password");
             String type = rs.getString("type");
             Integer id = rs.getInt("UserID");
-            Users user = new Users(login, password, type, id);
+            User user = new User(login, password, type, id);
             userAndAdminInfoList.add(user);
         }
         connection.close();
         return userAndAdminInfoList;
     }
 
-    public void updateAdminLogin(Users user, String oldLogin) throws SQLException {
+    public void updateAdminLogin(User user, String oldLogin) throws SQLException {
         Connection connection = DbManager.createConnectionSource();
         Statement statement = connection.createStatement();
         String newLogin = user.getLogin();
@@ -106,7 +106,7 @@ public class UsersDao {
         DialogUtils.successfullyUpdatedDialog();
     }
 
-    public void updateAdminPassword(Users user) throws SQLException {
+    public void updateAdminPassword(User user) throws SQLException {
         Connection connection = DbManager.createConnectionSource();
         Statement statement = connection.createStatement();
         String newPassword = user.getPassword();
@@ -117,7 +117,7 @@ public class UsersDao {
         DialogUtils.successfullyUpdatedDialog();
     }
 
-    public void updateAdminType(Users user) throws SQLException {
+    public void updateAdminType(User user) throws SQLException {
         Connection connection = DbManager.createConnectionSource();
         Statement statement = connection.createStatement();
         String newType = user.getType();
@@ -128,7 +128,7 @@ public class UsersDao {
         DialogUtils.successfullyUpdatedDialog();
     }
 
-    public boolean deleteUser(Users user) throws SQLException {
+    public boolean deleteUser(User user) throws SQLException {
         Connection connection = DbManager.createConnectionSource();
         Statement statement = connection.createStatement();
         String login = user.getLogin();

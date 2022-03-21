@@ -23,7 +23,7 @@
           <execution>
             <id>default-cli</id>
             <configuration>
-              <mainClass>pl.knap.NewMain</mainClass>
+              <mainClass>pl.knap.libsma.NewMain</mainClass>
             </configuration>
           </execution>
         </executions>
@@ -40,7 +40,7 @@
             <configuration>
               <transformers>
                 <transformer>
-                  <mainClass>pl.knap.NewMain</mainClass>
+                  <mainClass>pl.knap.libsma.NewMain</mainClass>
                 </transformer>
               </transformers>
             </configuration>

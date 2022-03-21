@@ -50,7 +50,7 @@ public class ManageBooksController {
 
     private void TableViewCreator() throws SQLException {
         BooksDao booksDao = new BooksDao();
-        allBooksInfo = booksDao.getAllBooksInfo();
+        allBooksInfo = booksDao.getBooksInfo("allBooks");
         booksTableView.setEditable(true);
 
         IdColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -73,10 +73,9 @@ public class ManageBooksController {
             @Override
             public void handle(TableColumn.CellEditEvent<Book, String> bookStringCellEditEvent) {
                 Book book = bookStringCellEditEvent.getRowValue();
-                String oldTitle = bookStringCellEditEvent.getOldValue();
                 book.setTitle(bookStringCellEditEvent.getNewValue());
                 try {
-                    booksDao.updateTitle(book, oldTitle);
+                    booksDao.updateTitle(book);
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
