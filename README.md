@@ -34,13 +34,13 @@ List the ready features here:
 
 
 ## Setup
-Project created on xamppie.
-Login: root
-Password:
-We create a database called Library and import library.sql
-Default login and password:
-Login: admin
-Password: admin
+- Run XAMPP
+- Login: root
+- Password:
+- Create a database called Library and import library.sql
+- Default login and password to Libsma:
+- Login: admin
+- Password: admin
 
 ## Project Status
 I am not working on the project anymore because I am focusing on the Spring and Hiberante frameworks
