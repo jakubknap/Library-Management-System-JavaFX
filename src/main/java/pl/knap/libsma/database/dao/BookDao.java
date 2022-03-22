@@ -155,33 +155,32 @@ public class BookDao {
     public void updateData(String key, Book book, String other) throws SQLException {
         switch (key) {
             case "updateTitle" -> {
-                executeUpdate("title", book.getTitle(), book.getIsbn());
+                DatabaseManager.executeUpdate("title", book.getTitle(), book.getIsbn());
             }
 
             case "updateAuthorName" -> {
-                executeUpdate("authorName", book.getAuthorName(), book.getIsbn());
+                DatabaseManager.executeUpdate("authorName", book.getAuthorName(), book.getIsbn());
             }
 
             case "updateAuthorSurname" -> {
-                executeUpdate("authorSurname", book.getAuthorSurname(), book.getIsbn());
+                DatabaseManager.executeUpdate("authorSurname", book.getAuthorSurname(), book.getIsbn());
             }
 
             case "updateCategory" -> {
-                executeUpdate("category", book.getCategory(), book.getIsbn());
+                DatabaseManager.executeUpdate("category", book.getCategory(), book.getIsbn());
             }
 
             case "updateReleaseDate" -> {
-                executeUpdate("releaseDate", book.getReleaseDate(), book.getIsbn());
+                DatabaseManager.executeUpdate("releaseDate", book.getReleaseDate(), book.getIsbn());
             }
 
             case "updateIsbn" -> {
-                executeUpdate("isbn", book.getIsbn(), other);
+                DatabaseManager.executeUpdate("isbn", book.getIsbn(), other);
             }
 
             case "updateStatus" -> {
-                executeUpdate("status", String.valueOf(book.getStatus()), book.getIsbn());
+                DatabaseManager.executeUpdate("status", String.valueOf(book.getStatus()), book.getIsbn());
             }
-
         }
     }
 
@@ -254,52 +253,6 @@ public class BookDao {
         int userID = rs.getInt("userID");
         Book book = new Book(bookID, title, authorName, authorSurname, category, releaseDate, isbn, status, userID);
         return book;
-    }
-
-    private void executeUpdate(String key, String value, String isbn) throws SQLException {
-        Connection connection = DatabaseManager.getConnection();
-        PreparedStatement statement = null;
-        String query;
-        switch (key) {
-            case "title" -> {
-                query = "UPDATE books set title = ? where isbn = ?;";
-                statement = DatabaseManager.getPreparedStatementToUpdate(value, isbn, connection, query);
-            }
-
-            case "authorName" -> {
-                query = "UPDATE books set authorName = ? where isbn = ?;";
-                statement = DatabaseManager.getPreparedStatementToUpdate(value, isbn, connection, query);
-            }
-
-            case "authorSurname" -> {
-                query = "UPDATE books set authorSurname = ? where isbn = ?;";
-                statement = DatabaseManager.getPreparedStatementToUpdate(value, isbn, connection, query);
-            }
-
-            case "category" -> {
-                query = "UPDATE books set category = ? where isbn = ?;";
-                statement = DatabaseManager.getPreparedStatementToUpdate(value, isbn, connection, query);
-            }
-
-            case "releaseDate" -> {
-                query = "UPDATE books set releaseDate = ? where isbn = ?;";
-                statement = DatabaseManager.getPreparedStatementToUpdate(value, isbn, connection, query);
-            }
-
-            case "isbn" -> {
-                query = "UPDATE books set isbn = ? where isbn = ?;";
-                statement = DatabaseManager.getPreparedStatementToUpdate(value, isbn, connection, query);
-            }
-
-            case "status" -> {
-                query = "UPDATE books set status = ? where isbn = ?;";
-                statement = DatabaseManager.getPreparedStatementToUpdate(String.valueOf(Integer.parseInt(value)), isbn, connection, query);
-            }
-        }
-        statement.executeUpdate();
-        connection.close();
-
-        DialogUtils.successfullyUpdatedDialog();
     }
 }
 
