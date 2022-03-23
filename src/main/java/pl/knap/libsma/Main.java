@@ -3,7 +3,6 @@ package pl.knap.libsma;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import pl.knap.libsma.database.models.enums.Update;
 import pl.knap.libsma.utils.FxmlUtils;
 
 import java.util.Locale;
