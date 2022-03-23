@@ -11,7 +11,6 @@ import pl.knap.libsma.database.models.Book;
 import pl.knap.libsma.utils.DialogUtils;
 import pl.knap.libsma.utils.FxmlUtils;
 
-import java.sql.SQLException;
 import java.time.format.DateTimeFormatter;
 
 public class AddBookController {
@@ -46,13 +45,12 @@ public class AddBookController {
     }
 
     @FXML
-    private void addNewBook() throws SQLException {
+    private void addNewBook() {
         try {
             Book book = createBook();
-
             BookDaoImpl bookDaoImpl = new BookDaoImpl();
             bookDaoImpl.addBook(book);
-        } catch (NullPointerException e) {
+        } catch (Exception e) {
             DialogUtils.errorDialog(FxmlUtils.getResourceBundle().getString("empty"));
         }
     }

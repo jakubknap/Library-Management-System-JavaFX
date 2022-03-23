@@ -1,11 +1,12 @@
 package pl.knap.libsma;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import pl.knap.libsma.database.dbutils.DatabaseManager;
+import pl.knap.libsma.utils.DialogUtils;
 import pl.knap.libsma.utils.FxmlUtils;
-
-import java.util.Locale;
 
 public class Main extends Application {
 
@@ -22,11 +23,15 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) {
-        scene = new Scene(FxmlUtils.loadFXML(LOGIN_FORM_FXML), 1000, 500);
-        stage.setScene(scene);
-        stage.setTitle(FxmlUtils.getResourceBundle().getString("title.app"));
-        stage.setResizable(false);
+        if (DatabaseManager.createConnectionSource() != null) {
+            scene = new Scene(FxmlUtils.loadFXML(LOGIN_FORM_FXML), 1000, 500);
+            stage.setScene(scene);
+            stage.setTitle(FxmlUtils.getResourceBundle().getString("title.app"));
+            stage.setResizable(false);
+            stage.show();
+        } else {
+            DialogUtils.errorDialog(FxmlUtils.getResourceBundle().getString("connFailed"));
 
-        stage.show();
+        }
     }
 }

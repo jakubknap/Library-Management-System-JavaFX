@@ -11,8 +11,6 @@ import pl.knap.libsma.database.models.User;
 import pl.knap.libsma.utils.DialogUtils;
 import pl.knap.libsma.utils.FxmlUtils;
 
-import java.sql.SQLException;
-
 public class AddUserController {
     private final String administrator = FxmlUtils.getResourceBundle().getString("administrator");
     private final String user = FxmlUtils.getResourceBundle().getString("user");
@@ -35,16 +33,14 @@ public class AddUserController {
     }
 
     @FXML
-    private void addUser() throws SQLException {
+    private void addUser() {
         try {
             User user = createUser();
             UserDaoImpl userDaoImpl = new UserDaoImpl();
             userDaoImpl.addUser(user);
-        } catch (NullPointerException e) {
+        } catch (Exception e) {
             DialogUtils.errorDialog(FxmlUtils.getResourceBundle().getString("empty"));
         }
-
-
     }
 
     private User createUser() {

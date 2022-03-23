@@ -42,12 +42,12 @@ public class BorrowBookController {
     }
 
     @FXML
-    private void borrowBook() throws SQLException {
+    private void borrowBook() {
         try {
             Book book = borrowBookView.getSelectionModel().getSelectedItem();
             bookDaoImpl.borrowBook(book);
             borrowBookView.getItems().removeAll(borrowBookView.getSelectionModel().getSelectedItem());
-        } catch (NullPointerException e) {
+        } catch (Exception e) {
             DialogUtils.errorDialog(FxmlUtils.getResourceBundle().getString("noBookSelected"));
         }
     }

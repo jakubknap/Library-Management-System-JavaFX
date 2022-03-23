@@ -42,12 +42,12 @@ public class ReturnBookController {
     }
 
     @FXML
-    private void returnBook() throws SQLException {
+    private void returnBook() {
         try {
             Book book = returnBookView.getSelectionModel().getSelectedItem();
             bookDaoImpl.returnBook(book);
             returnBookView.getItems().removeAll(returnBookView.getSelectionModel().getSelectedItem());
-        } catch (NullPointerException e) {
+        } catch (Exception e) {
             DialogUtils.errorDialog(FxmlUtils.getResourceBundle().getString("noBookSelected"));
         }
     }

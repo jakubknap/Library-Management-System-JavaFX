@@ -18,7 +18,6 @@ public class DatabaseManager {
             return conn;
 
         } catch (Exception e) {
-            DialogUtils.errorDialog(DialogUtils.errorDialog(FxmlUtils.getResourceBundle().getString("connFailed")));
             return null;
         }
     }
