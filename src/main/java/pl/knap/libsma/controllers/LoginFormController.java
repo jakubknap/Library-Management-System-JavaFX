@@ -5,7 +5,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import pl.knap.libsma.database.dao.UserDao;
+import pl.knap.libsma.database.dao.UserDaoImpl;
 import pl.knap.libsma.database.models.User;
 import pl.knap.libsma.utils.DialogUtils;
 
@@ -27,9 +27,9 @@ public class LoginFormController {
     @FXML
     private void initialize() {
         try {
-            UserDao userDao = new UserDao();
-            allAdminsInfo = userDao.getMembersInfo("admins");
-            allUserInfo = userDao.getMembersInfo("users");
+            UserDaoImpl userDaoImpl = new UserDaoImpl();
+            allAdminsInfo = userDaoImpl.getMembersInfo("admins");
+            allUserInfo = userDaoImpl.getMembersInfo("users");
         } catch (SQLException e) {
             DialogUtils.errorDialog(e.getMessage());
         }

@@ -6,7 +6,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import pl.knap.libsma.database.dao.UserDao;
+import pl.knap.libsma.database.dao.UserDaoImpl;
 import pl.knap.libsma.database.models.User;
 import pl.knap.libsma.utils.DialogUtils;
 import pl.knap.libsma.utils.FxmlUtils;
@@ -38,8 +38,8 @@ public class AddUserController {
     private void addUser() throws SQLException {
         try {
             User user = createUser();
-            UserDao userDao = new UserDao();
-            userDao.addUser(user);
+            UserDaoImpl userDaoImpl = new UserDaoImpl();
+            userDaoImpl.addUser(user);
         } catch (NullPointerException e) {
             DialogUtils.errorDialog(FxmlUtils.getResourceBundle().getString("empty"));
         }

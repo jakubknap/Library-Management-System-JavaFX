@@ -7,8 +7,9 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
-import pl.knap.libsma.database.dao.BookDao;
+import pl.knap.libsma.database.dao.BookDaoImpl;
 import pl.knap.libsma.database.models.Book;
+import pl.knap.libsma.database.models.enums.BookType;
 import pl.knap.libsma.utils.DialogUtils;
 import pl.knap.libsma.utils.FxmlUtils;
 
@@ -17,7 +18,7 @@ import java.sql.SQLException;
 public class ReturnBookController {
 
     private ObservableList<Book> allBooksBorrowedInfo = FXCollections.observableArrayList();
-    private final BookDao bookDao = new BookDao();
+    private final BookDaoImpl bookDaoImpl = new BookDaoImpl();
 
     @FXML
     private TableView<Book> returnBookView;
@@ -44,7 +45,7 @@ public class ReturnBookController {
     private void returnBook() throws SQLException {
         try {
             Book book = returnBookView.getSelectionModel().getSelectedItem();
-            bookDao.returnBook(book);
+            bookDaoImpl.returnBook(book);
             returnBookView.getItems().removeAll(returnBookView.getSelectionModel().getSelectedItem());
         } catch (NullPointerException e) {
             DialogUtils.errorDialog(FxmlUtils.getResourceBundle().getString("noBookSelected"));
@@ -57,8 +58,8 @@ public class ReturnBookController {
     }
 
     private void TableViewCreator() throws SQLException {
-        BookDao bookDao = new BookDao();
-        allBooksBorrowedInfo = bookDao.getBooksInfo("borrowed");
+        BookDaoImpl bookDaoImpl = new BookDaoImpl();
+        allBooksBorrowedInfo = bookDaoImpl.getBooksInfo(BookType.BORROWED);
 
         titleColumnView();
         authorNameColumnView();

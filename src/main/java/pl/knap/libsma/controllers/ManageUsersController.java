@@ -8,8 +8,9 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
-import pl.knap.libsma.database.dao.UserDao;
+import pl.knap.libsma.database.dao.UserDaoImpl;
 import pl.knap.libsma.database.models.User;
+import pl.knap.libsma.database.models.enums.Update;
 import pl.knap.libsma.utils.DialogUtils;
 import pl.knap.libsma.utils.FxmlUtils;
 
@@ -36,19 +37,19 @@ public class ManageUsersController {
     }
 
     private void TableViewCreator() throws SQLException {
-        UserDao userDao = new UserDao();
-        allUserAndAdminsInfo = userDao.getMembersInfo("all");
+        UserDaoImpl userDaoImpl = new UserDaoImpl();
+        allUserAndAdminsInfo = userDaoImpl.getMembersInfo("all");
         usersTableView.setEditable(true);
 
         idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
-        loginColumnViewAndEdit(userDao);
-        passwordColumnViewAndEdit(userDao);
-        typeColumnViewAndEdit(userDao);
+        loginColumnViewAndEdit(userDaoImpl);
+        passwordColumnViewAndEdit(userDaoImpl);
+        typeColumnViewAndEdit(userDaoImpl);
 
         usersTableView.setItems(allUserAndAdminsInfo);
     }
 
-    private void typeColumnViewAndEdit(UserDao userDao) {
+    private void typeColumnViewAndEdit(UserDaoImpl userDaoImpl) {
         typeColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
         typeColumn.setCellFactory(TextFieldTableCell.forTableColumn());
         typeColumn.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<User, String>>() {
@@ -57,7 +58,7 @@ public class ManageUsersController {
                 User user = usersStringCellEditEvent.getRowValue();
                 user.setType(usersStringCellEditEvent.getNewValue());
                 try {
-                    userDao.updateData("type", user, null);
+                    userDaoImpl.updateData(Update.TYPE, user, null);
 
                 } catch (SQLException e) {
                     e.printStackTrace();
@@ -66,7 +67,7 @@ public class ManageUsersController {
         });
     }
 
-    private void passwordColumnViewAndEdit(UserDao userDao) {
+    private void passwordColumnViewAndEdit(UserDaoImpl userDaoImpl) {
         passwordColumn.setCellValueFactory(new PropertyValueFactory<>("password"));
         passwordColumn.setCellFactory(TextFieldTableCell.forTableColumn());
         passwordColumn.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<User, String>>() {
@@ -75,7 +76,7 @@ public class ManageUsersController {
                 User user = usersStringCellEditEvent.getRowValue();
                 user.setPassword(usersStringCellEditEvent.getNewValue());
                 try {
-                    userDao.updateData("password", user, null);
+                    userDaoImpl.updateData(Update.PASSWORD, user, null);
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
@@ -83,7 +84,7 @@ public class ManageUsersController {
         });
     }
 
-    private void loginColumnViewAndEdit(UserDao userDao) {
+    private void loginColumnViewAndEdit(UserDaoImpl userDaoImpl) {
         loginColumn.setCellValueFactory(new PropertyValueFactory<>("login"));
         loginColumn.setCellFactory(TextFieldTableCell.forTableColumn());
         loginColumn.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<User, String>>() {
@@ -93,7 +94,7 @@ public class ManageUsersController {
                 String oldLogin = usersStringCellEditEvent.getOldValue();
                 user.setLogin(usersStringCellEditEvent.getNewValue());
                 try {
-                    userDao.updateData("login", user, oldLogin);
+                    userDaoImpl.updateData(Update.LOGIN, user, oldLogin);
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
@@ -115,8 +116,8 @@ public class ManageUsersController {
     private void deleteUser() throws SQLException {
         try {
             User user = usersTableView.getSelectionModel().getSelectedItem();
-            UserDao userDao = new UserDao();
-            if (userDao.deleteUser(user)) {
+            UserDaoImpl userDaoImpl = new UserDaoImpl();
+            if (userDaoImpl.deleteUser(user)) {
                 usersTableView.getItems().removeAll(usersTableView.getSelectionModel().getSelectedItem());
             }
         } catch (NullPointerException e) {

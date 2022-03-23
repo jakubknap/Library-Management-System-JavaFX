@@ -6,7 +6,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
-import pl.knap.libsma.database.dao.BookDao;
+import pl.knap.libsma.database.dao.BookDaoImpl;
 import pl.knap.libsma.database.models.Book;
 import pl.knap.libsma.utils.DialogUtils;
 import pl.knap.libsma.utils.FxmlUtils;
@@ -50,8 +50,8 @@ public class AddBookController {
         try {
             Book book = createBook();
 
-            BookDao bookDao = new BookDao();
-            bookDao.addBook(book);
+            BookDaoImpl bookDaoImpl = new BookDaoImpl();
+            bookDaoImpl.addBook(book);
         } catch (NullPointerException e) {
             DialogUtils.errorDialog(FxmlUtils.getResourceBundle().getString("empty"));
         }

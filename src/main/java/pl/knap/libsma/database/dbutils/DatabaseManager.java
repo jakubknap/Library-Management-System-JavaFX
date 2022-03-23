@@ -1,5 +1,6 @@
 package pl.knap.libsma.database.dbutils;
 
+import pl.knap.libsma.database.models.enums.Update;
 import pl.knap.libsma.utils.DialogUtils;
 import pl.knap.libsma.utils.FxmlUtils;
 
@@ -47,59 +48,59 @@ public class DatabaseManager {
         return statement.executeQuery(query);
     }
 
-    public static void executeUpdate(String key, String value, String idBy) throws SQLException {
+    public static void executeUpdate(Update updateKey, String value, String idBy) throws SQLException {
         Connection connection = DatabaseManager.createConnectionSource();
         PreparedStatement statement = null;
         String query;
-        switch (key) {
+        switch (updateKey) {
             // Books
-            case "title" -> {
+            case TITLE -> {
                 query = "UPDATE books set title = ? where isbn = ?;";
                 statement = getPreparedStatementToUpdate(value, idBy, connection, query);
             }
 
-            case "authorName" -> {
+            case AUTHOR_NAME -> {
                 query = "UPDATE books set authorName = ? where isbn = ?;";
                 statement = getPreparedStatementToUpdate(value, idBy, connection, query);
             }
 
-            case "authorSurname" -> {
+            case AUTHOR_SURNAME -> {
                 query = "UPDATE books set authorSurname = ? where isbn = ?;";
                 statement = getPreparedStatementToUpdate(value, idBy, connection, query);
             }
 
-            case "category" -> {
+            case CATEGORY -> {
                 query = "UPDATE books set category = ? where isbn = ?;";
                 statement = getPreparedStatementToUpdate(value, idBy, connection, query);
             }
 
-            case "releaseDate" -> {
+            case RELEASE_DATE -> {
                 query = "UPDATE books set releaseDate = ? where isbn = ?;";
                 statement = getPreparedStatementToUpdate(value, idBy, connection, query);
             }
 
-            case "isbn" -> {
+            case ISBN -> {
                 query = "UPDATE books set isbn = ? where isbn = ?;";
                 statement = getPreparedStatementToUpdate(value, idBy, connection, query);
             }
 
-            case "status" -> {
+            case STATUS -> {
                 query = "UPDATE books set status = ? where isbn = ?;";
                 statement = getPreparedStatementToUpdate(String.valueOf(Integer.parseInt(value)), idBy, connection, query);
             }
             // Books ^
             //Users
-            case "login" -> {
+            case LOGIN -> {
                 query = "UPDATE users set login = ? where login = ?;";
                 statement = getPreparedStatementToUpdate(value, idBy, connection, query);
             }
 
-            case "password" -> {
+            case PASSWORD -> {
                 query = "UPDATE users set password = ? where login = ?;";
                 statement = getPreparedStatementToUpdate(value, idBy, connection, query);
             }
 
-            case "type" -> {
+            case TYPE -> {
                 query = "UPDATE users set type = ? where login = ?;";
                 statement = getPreparedStatementToUpdate(value, idBy, connection, query);
             }

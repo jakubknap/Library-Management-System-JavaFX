@@ -3,7 +3,10 @@ package pl.knap.libsma;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import pl.knap.libsma.database.models.enums.Update;
 import pl.knap.libsma.utils.FxmlUtils;
+
+import java.util.Locale;
 
 public class Main extends Application {
 
@@ -15,11 +18,14 @@ public class Main extends Application {
     }
 
     public static void main(String[] args) {
-        launch();
+        //launch();
+        Update update = Update.STATUS;
+        System.out.println(update.name());
     }
 
     @Override
     public void start(Stage stage) {
+        Locale.setDefault(Locale.CANADA);
         scene = new Scene(FxmlUtils.loadFXML(LOGIN_FORM_FXML), 1000, 500);
         stage.setScene(scene);
         stage.setTitle(FxmlUtils.getResourceBundle().getString("title.app"));

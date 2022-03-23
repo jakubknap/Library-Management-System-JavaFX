@@ -9,8 +9,10 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.util.converter.IntegerStringConverter;
-import pl.knap.libsma.database.dao.BookDao;
+import pl.knap.libsma.database.dao.BookDaoImpl;
 import pl.knap.libsma.database.models.Book;
+import pl.knap.libsma.database.models.enums.BookType;
+import pl.knap.libsma.database.models.enums.Update;
 import pl.knap.libsma.utils.DialogUtils;
 import pl.knap.libsma.utils.FxmlUtils;
 
@@ -42,31 +44,30 @@ public class ManageBooksController {
     @FXML
     private TableColumn<Book, String> userIdBorrowedColumn;
 
-
     @FXML
     private void initialize() throws SQLException {
         TableViewCreator();
     }
 
     private void TableViewCreator() throws SQLException {
-        BookDao bookDao = new BookDao();
-        allBooksInfo = bookDao.getBooksInfo("allBooks");
+        BookDaoImpl bookDaoImpl = new BookDaoImpl();
+        allBooksInfo = bookDaoImpl.getBooksInfo(BookType.ALL_BOOKS);
         booksTableView.setEditable(true);
 
         IdColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
-        titleColumnViewAndEdit(bookDao);
-        authorNameColumnViewAndEdit(bookDao);
-        authorSurnameColumnViewAndEdit(bookDao);
-        categoryColumnViewAndEdit(bookDao);
-        releaseDateColumnViewAndEdit(bookDao);
-        isbnDateColumnViewAndEdit(bookDao);
-        statusDateColumnViewAndEdit(bookDao);
-        userNameDateColumnViewAndEdit(bookDao);
+        titleColumnViewAndEdit(bookDaoImpl);
+        authorNameColumnViewAndEdit(bookDaoImpl);
+        authorSurnameColumnViewAndEdit(bookDaoImpl);
+        categoryColumnViewAndEdit(bookDaoImpl);
+        releaseDateColumnViewAndEdit(bookDaoImpl);
+        isbnDateColumnViewAndEdit(bookDaoImpl);
+        statusDateColumnViewAndEdit(bookDaoImpl);
+        userNameDateColumnViewAndEdit(bookDaoImpl);
 
         booksTableView.setItems(allBooksInfo);
     }
 
-    private void titleColumnViewAndEdit(BookDao bookDao) {
+    private void titleColumnViewAndEdit(BookDaoImpl bookDaoImpl) {
         titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
         titleColumn.setCellFactory(TextFieldTableCell.forTableColumn());
         titleColumn.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Book, String>>() {
@@ -75,7 +76,7 @@ public class ManageBooksController {
                 Book book = bookStringCellEditEvent.getRowValue();
                 book.setTitle(bookStringCellEditEvent.getNewValue());
                 try {
-                    bookDao.updateData("updateTitle", book, null);
+                    bookDaoImpl.updateData(Update.TITLE, book, null);
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
@@ -83,7 +84,7 @@ public class ManageBooksController {
         });
     }
 
-    private void authorNameColumnViewAndEdit(BookDao bookDao) {
+    private void authorNameColumnViewAndEdit(BookDaoImpl bookDaoImpl) {
         authorNameColumn.setCellValueFactory(new PropertyValueFactory<>("authorName"));
         authorNameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
         authorNameColumn.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Book, String>>() {
@@ -92,7 +93,7 @@ public class ManageBooksController {
                 Book book = bookStringCellEditEvent.getRowValue();
                 book.setAuthorName(bookStringCellEditEvent.getNewValue());
                 try {
-                    bookDao.updateData("updateAuthorName", book, null);
+                    bookDaoImpl.updateData(Update.AUTHOR_NAME, book, null);
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
@@ -100,7 +101,7 @@ public class ManageBooksController {
         });
     }
 
-    private void authorSurnameColumnViewAndEdit(BookDao bookDao) {
+    private void authorSurnameColumnViewAndEdit(BookDaoImpl bookDaoImpl) {
         authorSurnameColumn.setCellValueFactory(new PropertyValueFactory<>("authorSurname"));
         authorSurnameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
         authorSurnameColumn.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Book, String>>() {
@@ -109,7 +110,7 @@ public class ManageBooksController {
                 Book book = bookStringCellEditEvent.getRowValue();
                 book.setAuthorSurname(bookStringCellEditEvent.getNewValue());
                 try {
-                    bookDao.updateData("updateAuthorSurname", book, null);
+                    bookDaoImpl.updateData(Update.AUTHOR_SURNAME, book, null);
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
@@ -117,7 +118,7 @@ public class ManageBooksController {
         });
     }
 
-    private void categoryColumnViewAndEdit(BookDao bookDao) {
+    private void categoryColumnViewAndEdit(BookDaoImpl bookDaoImpl) {
         categoryColumn.setCellValueFactory(new PropertyValueFactory<>("category"));
         categoryColumn.setCellFactory(TextFieldTableCell.forTableColumn());
         categoryColumn.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Book, String>>() {
@@ -126,7 +127,7 @@ public class ManageBooksController {
                 Book book = bookStringCellEditEvent.getRowValue();
                 book.setCategory(bookStringCellEditEvent.getNewValue());
                 try {
-                    bookDao.updateData("updateCategory", book, null);
+                    bookDaoImpl.updateData(Update.CATEGORY, book, null);
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
@@ -134,7 +135,7 @@ public class ManageBooksController {
         });
     }
 
-    private void releaseDateColumnViewAndEdit(BookDao bookDao) {
+    private void releaseDateColumnViewAndEdit(BookDaoImpl bookDaoImpl) {
         releaseDateColumn.setCellValueFactory(new PropertyValueFactory<>("releaseDate"));
         releaseDateColumn.setCellFactory(TextFieldTableCell.forTableColumn());
         releaseDateColumn.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Book, String>>() {
@@ -143,7 +144,7 @@ public class ManageBooksController {
                 Book book = bookStringCellEditEvent.getRowValue();
                 book.setReleaseDate(bookStringCellEditEvent.getNewValue());
                 try {
-                    bookDao.updateData("updateReleaseDate", book, null);
+                    bookDaoImpl.updateData(Update.RELEASE_DATE, book, null);
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
@@ -151,7 +152,7 @@ public class ManageBooksController {
         });
     }
 
-    private void isbnDateColumnViewAndEdit(BookDao bookDao) {
+    private void isbnDateColumnViewAndEdit(BookDaoImpl bookDaoImpl) {
         isbnColumn.setCellValueFactory(new PropertyValueFactory<>("isbn"));
         isbnColumn.setCellFactory(TextFieldTableCell.forTableColumn());
         isbnColumn.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Book, String>>() {
@@ -161,7 +162,7 @@ public class ManageBooksController {
                 String oldIsbn = bookStringCellEditEvent.getOldValue();
                 book.setIsbn(bookStringCellEditEvent.getNewValue());
                 try {
-                    bookDao.updateData("updateIsbn", book, oldIsbn);
+                    bookDaoImpl.updateData(Update.ISBN, book, oldIsbn);
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
@@ -169,7 +170,7 @@ public class ManageBooksController {
         });
     }
 
-    private void statusDateColumnViewAndEdit(BookDao bookDao) {
+    private void statusDateColumnViewAndEdit(BookDaoImpl bookDaoImpl) {
         statusColumn.setCellValueFactory(new PropertyValueFactory<>("status"));
         statusColumn.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
         statusColumn.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Book, Integer>>() {
@@ -178,7 +179,7 @@ public class ManageBooksController {
                 Book book = bookIntegerCellEditEvent.getRowValue();
                 book.setStatus(bookIntegerCellEditEvent.getNewValue());
                 try {
-                    bookDao.updateData("updateStatus", book, null);
+                    bookDaoImpl.updateData(Update.STATUS, book, null);
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
@@ -186,7 +187,7 @@ public class ManageBooksController {
         });
     }
 
-    private void userNameDateColumnViewAndEdit(BookDao bookDao) {
+    private void userNameDateColumnViewAndEdit(BookDaoImpl bookDaoImpl) {
         userIdBorrowedColumn.setCellValueFactory(new PropertyValueFactory<>("userName"));
         userIdBorrowedColumn.setCellFactory(TextFieldTableCell.forTableColumn());
     }
@@ -195,8 +196,8 @@ public class ManageBooksController {
     private void deleteBook() throws SQLException {
         try {
             Book book = (Book) booksTableView.getSelectionModel().getSelectedItem();
-            BookDao bookDao = new BookDao();
-            if (bookDao.deleteBook(book)) {
+            BookDaoImpl bookDaoImpl = new BookDaoImpl();
+            if (bookDaoImpl.deleteBook(book)) {
                 booksTableView.getItems().removeAll(booksTableView.getSelectionModel().getSelectedItem());
             }
         } catch (NullPointerException e) {
