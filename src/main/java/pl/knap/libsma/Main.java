@@ -18,9 +18,7 @@ public class Main extends Application {
     }
 
     public static void main(String[] args) {
-        //launch();
-        Update update = Update.STATUS;
-        System.out.println(update.name());
+        launch();
     }
 
     @Override
