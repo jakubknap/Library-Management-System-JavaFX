@@ -22,7 +22,6 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) {
-        Locale.setDefault(Locale.CANADA);
         scene = new Scene(FxmlUtils.loadFXML(LOGIN_FORM_FXML), 1000, 500);
         stage.setScene(scene);
         stage.setTitle(FxmlUtils.getResourceBundle().getString("title.app"));
